@@ -1,0 +1,43 @@
+﻿@model Common.UserType
+
+@{
+    ViewBag.Title = "CreateUserType";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+<h2>CreateUserType</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>UserType</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "text" })
+            
+                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "input" } })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="form-group">
+            
+                <input type="submit" value="Create" class="btn btn-default" />
+            
+        </div>
+
+
+        <p>
+            @if (ViewData["msg"] != null)
+                {
+                @ViewData["msg"].ToString();
+                }
+        </p>
+    </div>
+
+
+}
+

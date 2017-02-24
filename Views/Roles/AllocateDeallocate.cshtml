@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "AllocateDeallocate";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+<!--in order to use the model-->
+@model Assignment.Models.RolesModel
+
+<!--We need to submit the decision of the user so we need of a form IMP if you are going to call the method from another controller or another name you have to ser the parameters in the bracketrs, name of the method and name of the controller-->
+@using (Html.BeginForm())
+{
+    
+    <label>Select User: </label> @Html.DropDownListFor(model => model.Username, Model.Users)//the first parameter is the property in which the selete value will be stored, whilst the second parameter is the list of roles/users the will populate the dropdownlist
+    <label>&nbsp&nbsp Select Role: </label> @Html.DropDownListFor(model => model.RoleId, Model.Roles) //getting them from the moodel(dropdownlists).
+<br/><br/>
+
+    <input type="submit" value="Allocate" id="btnAllocate" name="choice" class="btn btn-default"/> <label>&nbsp &nbsp</label>
+    <input type="submit" value="Deallocate" id="btnDeAllocate" name="choice" class="btn btn-default"/>
+    <br />
+    <br />
+    @Html.DisplayFor(model => model.Message)
+    }
+

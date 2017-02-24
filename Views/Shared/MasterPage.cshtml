@@ -1,0 +1,124 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <link href="~/Content/StyleSheet.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width" />
+    <title>MasterPage</title>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+           
+         
+            <a href="/Index/Index"><img src="~/Images/logo.png" alt="Techware" class="logo"></a>
+            
+               
+            <div id="searchbox">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                          @using (Html.BeginForm("ProductCatalog", "Products")) {
+                                 <input type="text" class="form-control" placeholder="Search for..." name="input">
+                          //  <i class="fa fa-facebook fa-3x"></i> icons
+                                
+
+                        }
+
+
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                @{ 
+                if (Context.User.Identity.IsAuthenticated == false)
+                {
+                <a href="/Users/Login">Login </a><label> / </label>  <a href="/Users/Register">Register</a>
+                    }
+                    else
+                    {
+                        Common.Client myUser = new BusinessLogic.UsersBL().GetUser(Context.User.Identity.Name);
+                        string fullname = myUser.FirstName + " " + myUser.LastName;
+
+                         <label>Welcome:  @fullname</label>
+
+                    <a href=/Users/Logoff>Logoff</a>
+                }
+                }
+            </div>
+
+
+            <nav id="navigation">
+
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li>
+                        <a href="#">Tutorials</a>
+                        <ul>
+                            <li><a href="#">Photoshop</a></li>
+                            <li><a href="#">Illustrator</a></li>
+                            <li><a href="#">Web Design</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Articles</a>
+                        <ul>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">User Experience</a></li>
+                            <li><a href="#">10</a><a href="#">21</a></li>
+                            <li><a href="#">20</a><a href="#">21</a></li>
+
+
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Inspiration</a></li>
+                    <li><a href="#">Photoshop</a></li>
+                    <li><a href="#">Illustrator</a></li>
+                    <li><a href="#">Web Design</a></li>
+
+                </ul>
+            </nav>
+            <br />
+            <br />
+
+        </div>
+        <div id="content">
+            @RenderBody()
+        </div>
+
+
+        <div id="footer">
+            Copyright © 2015 Mobiles-Malta
+            <div id="followUs">
+                Follow Us!
+               <a href="http://www.facebook.com"><img src="~/Images/facebookIcon.png" id="image2" /></a>
+                <a href="http://www.twitter.com"><img src="~/Images/twitter Icon.png" id="image2" /></a>
+                <a href="http://www.linkedin.com"><img src="~/Images/linkedinicon.jpg" id="image2" /></a><br/>
+                <img src="~/Images/mcafee.jpg" id="image1" />
+                <img src="~/Images/norton.png" id="image1" />
+                <img src="~/Images/visa.png" id="image1" /> 
+
+            </div>
+
+            <div id="contact">
+                Tel: (+356) 21456723<br/>
+                Email: mobilesmalta@sales.com
+            </div>
+
+            
+        </div>
+    </div>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+</body>
+</html>

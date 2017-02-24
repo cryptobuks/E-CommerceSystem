@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AssignmentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MainCategory" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Stage" Relationship="Self.FK_Orders_Stages" FromRole="Orders" ToRole="Stages" />
+    <NavigationProperty Name="OrdersProducts" Relationship="Self.FK_OrdersProducts_Orders" FromRole="Orders" ToRole="OrdersProducts" />
+    <NavigationProperty Name="Client" Relationship="AssignmentDBModel.FK_Orders_Clients" FromRole="Order" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="OrdersProduct">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrdersProducts_Orders" FromRole="OrdersProducts" ToRole="Orders" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_OrdersProducts_Products" FromRole="OrdersProducts" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Stock" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="Available" Type="Boolean" Nullable="false" />
+    <Property Name="Sale" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="OrdersProducts" Relationship="Self.FK_OrdersProducts_Products" FromRole="Products" ToRole="OrdersProducts" />
+    <NavigationProperty Name="Sale1" Relationship="Self.FK_Products_Sales" FromRole="Products" ToRole="Sales" />
+    <NavigationProperty Name="ProductsPrices" Relationship="Self.FK_ProductsPrices_Products" FromRole="Products" ToRole="ProductsPrices" />
+    <NavigationProperty Name="ShoppingCartItems" Relationship="Self.FK_ShoppingCartItems_Products" FromRole="Products" ToRole="ShoppingCartItems" />
+  </EntityType>
+  <EntityType Name="ProductsPrice">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_ProductsPrices_Products" FromRole="ProductsPrices" ToRole="Products" />
+    <NavigationProperty Name="UserType" Relationship="Self.FK_ProductsPrices_UserTypes" FromRole="ProductsPrices" ToRole="UserTypes" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Menus" Relationship="AssignmentDBModel.MenuRoles" FromRole="Role" ToRole="Menu" />
+    <NavigationProperty Name="Clients" Relationship="AssignmentDBModel.UserRoles" FromRole="Role" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Sale">
+    <Key>
+      <PropertyRef Name="SaleID" />
+    </Key>
+    <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalePercent" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Products_Sales" FromRole="Sales" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="ShoppingCartItem">
+    <Key>
+      <PropertyRef Name="Username" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_ShoppingCartItems_Products" FromRole="ShoppingCartItems" ToRole="Products" />
+    <NavigationProperty Name="Client" Relationship="AssignmentDBModel.FK_ShoppingCartItems_Clients" FromRole="ShoppingCartItem" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Stage">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Stages" FromRole="Stages" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Town">
+    <Key>
+      <PropertyRef Name="TownID" />
+    </Key>
+    <Property Name="TownID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TownName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Clients" Relationship="AssignmentDBModel.FK_Clients_Towns" FromRole="Town" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ProductsPrices" Relationship="Self.FK_ProductsPrices_UserTypes" FromRole="UserTypes" ToRole="ProductsPrices" />
+    <NavigationProperty Name="Clients" Relationship="AssignmentDBModel.FK_Clients_UserTypes" FromRole="UserType" ToRole="Client" />
+  </EntityType>
+  <Association Name="FK_Products_Categories">
+    <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Stages">
+    <End Role="Stages" Type="Self.Stage" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stages">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdersProducts_Orders">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrdersProducts" Type="Self.OrdersProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrdersProducts">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdersProducts_Products">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrdersProducts" Type="Self.OrdersProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrdersProducts">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Sales">
+    <End Role="Sales" Type="Self.Sale" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="SaleID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Sale" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductsPrices_Products">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductsPrices" Type="Self.ProductsPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductsPrices">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCartItems_Products">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="ShoppingCartItems" Type="Self.ShoppingCartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ShoppingCartItems">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductsPrices_UserTypes">
+    <End Role="UserTypes" Type="Self.UserType" Multiplicity="1" />
+    <End Role="ProductsPrices" Type="Self.ProductsPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTypes">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="ProductsPrices">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AssignmentDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="OrdersProducts" EntityType="Self.OrdersProduct" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductsPrices" EntityType="Self.ProductsPrice" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Sales" EntityType="Self.Sale" />
+    <EntitySet Name="ShoppingCartItems" EntityType="Self.ShoppingCartItem" />
+    <EntitySet Name="Stages" EntityType="Self.Stage" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Towns" EntityType="Self.Town" />
+    <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+    <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Stages" Association="Self.FK_Orders_Stages">
+      <End Role="Stages" EntitySet="Stages" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdersProducts_Orders" Association="Self.FK_OrdersProducts_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrdersProducts" EntitySet="OrdersProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdersProducts_Products" Association="Self.FK_OrdersProducts_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrdersProducts" EntitySet="OrdersProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Sales" Association="Self.FK_Products_Sales">
+      <End Role="Sales" EntitySet="Sales" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductsPrices_Products" Association="Self.FK_ProductsPrices_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductsPrices" EntitySet="ProductsPrices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartItems_Products" Association="Self.FK_ShoppingCartItems_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ShoppingCartItems" EntitySet="ShoppingCartItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductsPrices_UserTypes" Association="Self.FK_ProductsPrices_UserTypes">
+      <End Role="UserTypes" EntitySet="UserTypes" />
+      <End Role="ProductsPrices" EntitySet="ProductsPrices" />
+    </AssociationSet>
+    <EntitySet Name="Menus" EntityType="AssignmentDBModel.Menu" />
+    <AssociationSet Name="MenuRoles" Association="AssignmentDBModel.MenuRoles">
+      <End Role="Menu" EntitySet="Menus" />
+      <End Role="Role" EntitySet="Roles" />
+    </AssociationSet>
+    <EntitySet Name="Clients" EntityType="AssignmentDBModel.Client" />
+    <AssociationSet Name="FK_Clients_Towns" Association="AssignmentDBModel.FK_Clients_Towns">
+      <End Role="Town" EntitySet="Towns" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clients_UserTypes" Association="AssignmentDBModel.FK_Clients_UserTypes">
+      <End Role="UserType" EntitySet="UserTypes" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Clients" Association="AssignmentDBModel.FK_Orders_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartItems_Clients" Association="AssignmentDBModel.FK_ShoppingCartItems_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+    </AssociationSet>
+    <AssociationSet Name="UserRoles" Association="AssignmentDBModel.UserRoles">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Role" EntitySet="Roles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="MenuID" />
+    </Key>
+    <Property Name="MenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MenuName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Main" Type="Int32" />
+    <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Roles" Relationship="AssignmentDBModel.MenuRoles" FromRole="Menu" ToRole="Role" />
+  </EntityType>
+  <Association Name="MenuRoles">
+    <End Type="AssignmentDBModel.Menu" Role="Menu" Multiplicity="*" />
+    <End Type="AssignmentDBModel.Role" Role="Role" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="HouseName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Town" Type="Int32" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserType" Type="Int32" Nullable="false" />
+    <Property Name="TelNumber" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Blocked" Type="Boolean" Nullable="false" />
+    <Property Name="LoginAttempts" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Town1" Relationship="AssignmentDBModel.FK_Clients_Towns" FromRole="Client" ToRole="Town" />
+    <NavigationProperty Name="UserType1" Relationship="AssignmentDBModel.FK_Clients_UserTypes" FromRole="Client" ToRole="UserType" />
+    <NavigationProperty Name="Orders" Relationship="AssignmentDBModel.FK_Orders_Clients" FromRole="Client" ToRole="Order" />
+    <NavigationProperty Name="ShoppingCartItems" Relationship="AssignmentDBModel.FK_ShoppingCartItems_Clients" FromRole="Client" ToRole="ShoppingCartItem" />
+    <NavigationProperty Name="Roles" Relationship="AssignmentDBModel.UserRoles" FromRole="Client" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK_Clients_Towns">
+    <End Type="AssignmentDBModel.Town" Role="Town" Multiplicity="1" />
+    <End Type="AssignmentDBModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Town">
+        <PropertyRef Name="TownID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Town" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clients_UserTypes">
+    <End Type="AssignmentDBModel.UserType" Role="UserType" Multiplicity="1" />
+    <End Type="AssignmentDBModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="UserType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Clients">
+    <End Type="AssignmentDBModel.Client" Role="Client" Multiplicity="1" />
+    <End Type="AssignmentDBModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCartItems_Clients">
+    <End Type="AssignmentDBModel.Client" Role="Client" Multiplicity="1" />
+    <End Type="AssignmentDBModel.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="ShoppingCartItem">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserRoles">
+    <End Type="AssignmentDBModel.Client" Role="Client" Multiplicity="*" />
+    <End Type="AssignmentDBModel.Role" Role="Role" Multiplicity="*" />
+  </Association>
+</Schema>

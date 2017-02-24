@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null; //this page is not to be done. Div navigation left to be coppied depending on the page.
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/StyleSheet.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>MasterPage</title>
+</head>
+<body>
+    <img src="~/Images/logo.png" alt="Techware" class="logo">
+    <div id="header">
+        <nav id="navigation">
+
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li>
+                    <a href="#">Tutorials</a>
+                    <ul>
+                        <li><a href="#">Photoshop</a></li>
+                        <li><a href="#">Illustrator</a></li>
+                        <li><a href="#">Web Design</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Articles</a>
+                    <ul>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">User Experience</a></li>
+                        <li><a href="#">10</a><a href="#">21</a></li>
+                        <li><a href="#">20</a><a href="#">21</a></li>
+
+
+
+                    </ul>
+                </li>
+                <li><a href="#">Inspiration</a></li>
+                <li><a href="#">Photoshop</a></li>
+                <li><a href="#">Illustrator</a></li>
+                <li><a href="#">Web Design</a></li>
+            </ul>
+        </nav>
+        <br />
+        <br />
+    </div>
+
+
+    <div id="navigationLeft">
+
+       
+            <h4>Size</h4>           
+        <ul>
+            <li><a href="#">Photoshop</a></li>
+            <li><a href="#">Illustrator</a></li>
+            <li><a href="#">Web Design</a></li>
+        </ul>
+    </div>
+
+    <div id="content2">
+        @RenderBody()
+    </div>
+
+
+    <div id="footer">
+
+    </div>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+</body>
+</html>
+
+
+

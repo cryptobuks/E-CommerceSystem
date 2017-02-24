@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@using (Html.BeginForm("Login", "Users"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Login</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Username", htmlAttributes: new { @class = "text" })
+
+            <input type="text" name="username" class="input"/>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Password", htmlAttributes: new { @class = "text" })
+
+            <input type="password" name="password" class="input"/>
+        </div>
+
+       
+
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-default" />
+        </div>
+        <p>
+            @if (Session["msg"] != null)
+                {
+                @Session["msg"].ToString();
+                }
+        </p>
+    </div>
+}
+
+
+

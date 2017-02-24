@@ -1,0 +1,8 @@
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\bin\Debug\DataAccess.dll
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\bin\Debug\DataAccess.pdb
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\bin\Debug\Common.dll
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\bin\Debug\Common.pdb
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\obj\Debug\DataAccess.dll
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\obj\Debug\DataAccess.pdb
+C:\Users\Keith Cutajar\Desktop\Web Lesson\Assignment\DataAccess\bin\Debug\EntityFramework.xml
